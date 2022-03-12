@@ -1,0 +1,47 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: antiquewhite;
+}
+
+.container {
+  width: 1000px;
+  margin: 0 auto;
+
+  .ToDoList {
+    text-align: center;
+
+    &__title {
+      font-size: 48px;
+    }
+
+    &__input {
+
+    }
+
+    &__list {
+      width: 230px;
+      margin: 15px auto;
+    }
+
+    &__item {
+      text-align: left;
+      display: flex;
+      border-radius: 5px;
+      background: #f9f9f9;
+      padding: 5px 10px;
+      margin-bottom: 10px;
+      justify-content: space-between;
+
+      input {
+        position: relative;
+        top: 3px;
+        border-radius: 50%;
+      }
+    }
+  }
+}
