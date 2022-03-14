@@ -16,6 +16,27 @@ const App = () => {
     setList(arr);
   };
 
+  const closeBtn = (id) => {
+    const arr2 = [...list];
+
+    arr2.forEach((item) => {
+      if (item.id === id) {
+        arr2.splice(item, 1);
+      }
+    });
+    setList(arr2);
+
+    ls.set(LS_NAME, arr2);
+  };
+
+  useEffect(() => {
+    const lsData = ls.get(LS_NAME);
+
+    if (lsData) {
+      setList(lsData);
+    }
+  }, []);
+
   return (
     <div className="container">
       <div className="ToDoList">
@@ -28,12 +49,16 @@ const App = () => {
         />
         <button
           className="ToDoList__add"
-          onClick={() =>
-            setList([
+          onClick={() => {
+            const newState = [
               ...list,
               { text: input, completed: false, id: Date.now().toString() },
-            ])
-          }
+            ];
+
+            setList(newState);
+            ls.set(LS_NAME, newState);
+            // window.localStorage.setItem(LS_NAME, JSON.stringify(newState));
+          }}
         >
           add
         </button>
@@ -41,14 +66,17 @@ const App = () => {
           {list.map((item) => {
             return (
               <li key={item.id} className="ToDoList__item">
-                {item.text}
-                <input
-                  type="checkbox"
-                  checked={item.completed}
-                  onChange={(e) =>
-                    handleCheckboxChange(item.id, e.target.checked)
-                  }
-                />
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={item.completed}
+                    onChange={(e) =>
+                      handleCheckboxChange(item.id, e.target.checked)
+                    }
+                  />
+                  {item.text}
+                </div>
+                <button onClick={() => closeBtn(item.id)}>x</button>
               </li>
             );
           })}
